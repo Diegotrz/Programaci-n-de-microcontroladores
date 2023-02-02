@@ -1,6 +1,3 @@
-
-
-
 ;  Archivo: main.s
 ; Dispositivo: PIC16F887
 ; Autor: Diego Terraza
@@ -65,17 +62,22 @@ PROCESSOR 16F887
    bsf TRISB,1
    bsf TRISB,2
    bsf TRISB,3
+   bsf TRISB,4
+
      bcf TRISC,0
    bcf TRISC,1
    bcf TRISC,2
    bcf TRISC,3
-   
+   bcf TRISD,0
+   bcf TRISD,1
+   bcf TRISD,2
+   bcf TRISD,3
    
     bcf STATUS,5
     bcf STATUS,6
     clrf  PORTA
     clrf PORTC
-  
+    clrf PORTD
     
    cont_8b:
      btfsc PORTB,0
@@ -131,8 +133,6 @@ PROCESSOR 16F887
     return
     
     END
-
-
 
 
 
