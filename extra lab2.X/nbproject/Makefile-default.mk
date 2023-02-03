@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=assas.s
+SOURCEFILES_QUOTED_IF_SPACED=Lab2DT.s
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/assas.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/assas.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Lab2DT.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/Lab2DT.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/assas.o
+OBJECTFILES=${OBJECTDIR}/Lab2DT.o
 
 # Source Files
-SOURCEFILES=assas.s
+SOURCEFILES=Lab2DT.s
 
 
 
@@ -89,21 +89,21 @@ FINAL_IMAGE_NAME_MINUS_EXTENSION=${DISTDIR}/extra_lab2.X.${IMAGE_TYPE}
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: pic-as-assembler
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/assas.o: assas.s  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/Lab2DT.o: Lab2DT.s  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/assas.o 
+	@${RM} ${OBJECTDIR}/Lab2DT.o 
 	${MP_AS} -mcpu=PIC16F887 -c \
-	-o ${OBJECTDIR}/assas.o \
-	assas.s \
+	-o ${OBJECTDIR}/Lab2DT.o \
+	Lab2DT.s \
 	 -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
 	
 else
-${OBJECTDIR}/assas.o: assas.s  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/Lab2DT.o: Lab2DT.s  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/assas.o 
+	@${RM} ${OBJECTDIR}/Lab2DT.o 
 	${MP_AS} -mcpu=PIC16F887 -c \
-	-o ${OBJECTDIR}/assas.o \
-	assas.s \
+	-o ${OBJECTDIR}/Lab2DT.o \
+	Lab2DT.s \
 	  -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
 	
 endif
