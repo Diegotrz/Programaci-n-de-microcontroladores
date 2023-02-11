@@ -1,6 +1,6 @@
-# 1 "lab3_2.s"
+# 1 "Postlab.s"
 # 1 "<built-in>" 1
-# 1 "lab3_2.s" 2
+# 1 "Postlab.s" 2
 ; Archivo: LAB3
 ; Dispositivo: PIC16F887
 ; Autor: Diego Terraza
@@ -2457,7 +2457,7 @@ stk_offset SET 0
 auto_size SET 0
 ENDM
 # 8 "C:/Program Files/Microchip/MPLABX/v6.05/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\xc.inc" 2 3
-# 13 "lab3_2.s" 2
+# 13 "Postlab.s" 2
 
  ;configuration word 1
  CONFIG FOSC=INTRC_NOCLKOUT
@@ -2479,7 +2479,9 @@ ENDM
   cont_big: DS 1
   cont_small: DS 1
   cont_1s: DS 1
-
+  comp: DS 1
+  comp2: DS 1
+  comp3: DS 1
     PSECT resVect, class=CODE,abs, delta=2
     ORG 00h
     resetVec:
@@ -2537,7 +2539,8 @@ ENDM
     loop:
     call primer_contador
     call contador_display
-
+    call comparador
+    call reinicio_contsec
     movf PORTC,w
     call tabla
     movwf PORTD
@@ -2546,13 +2549,37 @@ ENDM
 
     goto loop
     ;---------------------------Subrutinas----------------------
-
+    reinicio_contsec:
+    incf PORTE
+    clrf PORTA
+    return
+    comparador:
+    movf PORTC, w
+    movwf comp
+    movf PORTA,w
+    subwf comp
+    movwf comp3
+    movlw 1
+    btfss comp3,0
+    sublw 1
+    btfss comp3,1
+    nop
+    btfss comp3,2
+    addlw 1
+    btfss comp3,3
+    sublw 1
+    movwf comp2
+    btfss comp2,0
+    call reinicio_contsec
+    return
     primer_contador:
     movlw 10
     movwf cont_1s
+
+    decf cont_1s
     call reiniciar_tmr0
-    decfsz cont_1s
-    goto $-1
+    btfsc cont_1s,0
+    goto $-3
 
     incf PORTA
 
@@ -2597,6 +2624,8 @@ ENDM
     bcf TRISC,1
     bcf TRISC,2
     bcf TRISC,3
+    ;Establecemos los pines del puerto E como salida
+    bcf TRISE,0
     ;Establecemos los pines del puerto D como salidas
     clrf TRISD
    ;Limpiamos los pines al iniciar el programa

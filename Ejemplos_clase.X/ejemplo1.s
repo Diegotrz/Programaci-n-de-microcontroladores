@@ -1,4 +1,4 @@
-;  Archivo: LAB3
+;  Archivo: Ejemplos de la clase
 ; Dispositivo: PIC16F887
 ; Autor: Diego Terraza
 ; Compilador: pic-as
@@ -31,7 +31,6 @@ PROCESSOR 16F887
   cont_big: DS 1
   cont_small: DS 1
   cont_1s: DS 1
-  comp: DS 1
     
     PSECT resVect, class=CODE,abs, delta=2
     ORG 00h
@@ -90,8 +89,7 @@ PROCESSOR 16F887
     loop:
     call primer_contador
     call contador_display
-    call comparador
-    call reinicio_contsec
+    
     movf PORTC,w
     call tabla
     movwf PORTD
@@ -100,29 +98,13 @@ PROCESSOR 16F887
 
     goto loop
     ;---------------------------Subrutinas----------------------
-    reinicio_contsec:
-    addlw 0
-    movwf PORTA
-    return
-    comparador:
-    movwf PORTA,w
-    andwf PORTC, comp
-    btfsc comp
-    incf PORTE
-    btfsc comp
-    call reinicio_contsec
-    return
-    
-    
     
     primer_contador:
     movlw 10
     movwf cont_1s
-    
-    decf cont_1s
-    call reiniciar_tmr0q
-    btfsc cont_1s
-    goto $-3
+    call reiniciar_tmr0
+    decfsz cont_1s
+    goto $-1
     
     incf PORTA
     
@@ -167,8 +149,6 @@ PROCESSOR 16F887
     bcf TRISC,1
     bcf TRISC,2
     bcf TRISC,3
-    ;Establecemos los pines del puerto E como salida
-    bcf TRISE,0
     ;Establecemos los pines del puerto D como salidas
     clrf TRISD
    ;Limpiamos los pines al iniciar el programa
@@ -214,6 +194,9 @@ PROCESSOR 16F887
     return
     
     END
+
+
+
 
 
 
