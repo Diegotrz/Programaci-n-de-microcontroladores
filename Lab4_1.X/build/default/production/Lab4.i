@@ -1,6 +1,6 @@
-# 1 "Postlab.s"
+# 1 "Lab4.s"
 # 1 "<built-in>" 1
-# 1 "Postlab.s" 2
+# 1 "Lab4.s" 2
 ; Archivo: LAB3
 ; Dispositivo: PIC16F887
 ; Autor: Diego Terraza
@@ -2457,7 +2457,7 @@ stk_offset SET 0
 auto_size SET 0
 ENDM
 # 8 "C:/Program Files/Microchip/MPLABX/v6.05/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\\pic\\include\\xc.inc" 2 3
-# 13 "Postlab.s" 2
+# 13 "Lab4.s" 2
 
  ;configuration word 1
  CONFIG FOSC=INTRC_NOCLKOUT
@@ -2474,17 +2474,65 @@ ENDM
 
  CONFIG WRT= OFF
  CONFIG BOR4V=BOR40V
+
+ ;-----Macros---------------
+ restart_tmr0 macro
+ banksel PORTA
+ movlw 100
+    movwf TMR0
+    bcf ((INTCON) and 07Fh), 2
+    endm
  ;------------------------Variables------------------
  PSECT udata_bank0
-  cont_big: DS 1
-  cont_small: DS 1
   cont_1s: DS 1
+  cont: DS 2
+  PSECT udata_shr
+ W_TEMP: DS 1
+ STATUS_TEMP: DS 1
 
     PSECT resVect, class=CODE,abs, delta=2
     ORG 00h
     resetVec:
     PAGESEL main
     goto main
+
+    ORG 04h
+    push:
+    movwf W_TEMP
+    swapf STATUS,W
+    movwf STATUS_TEMP
+
+    isr:
+    btfsc ((INTCON) and 07Fh), 0
+    call int_iocb
+    btfsc ((INTCON) and 07Fh), 2
+    call cont_tmr0
+    pop:
+    swapf STATUS_TEMP,W
+    movwf STATUS
+    swapf W_TEMP,F
+    swapf W_TEMP,W
+    retfie
+    ;------Subrutinas de interrupcion-----
+    int_iocb:
+    banksel PORTA
+    btfss PORTB,0
+    decf PORTA
+    btfss PORTB,1
+    incf PORTA
+    bcf ((INTCON) and 07Fh), 0
+    return
+    cont_tmr0:
+    restart_tmr0
+    incf cont
+    movf cont,W
+    sublw 50
+    btfss ((STATUS) and 07Fh), 2
+    goto return_t0
+    clrf cont
+    incf PORTC
+    return_t0:
+    return
 
     PSECT code,delta=2,abs
  ORG 100h
@@ -2532,50 +2580,33 @@ ENDM
    call config_io
    call config_reloj
    call config_tmr0
+  call config_int_enable
+  call config_ioc
    banksel PORTA
 
     loop:
-    call primer_contador
-    call contador_display
-   call comparador
-    movf PORTC,w
-    call tabla
-    movwf PORTD
 
-    call delay_big
+
+
 
     goto loop
     ;---------------------------Subrutinas----------------------
-    reinicio_contsec:
-    incf PORTE
-    clrf PORTA
-    return
-   comparador:
-   movf PORTC, w
-    subwf PORTA,w
-    btfsc STATUS,2
-    goto $+2
-    goto $+3
-    call primer_contador
-    call reinicio_contsec
-    return
-    primer_contador:
-    movlw 10
-    movwf cont_1s
-
-    decf cont_1s
-    call reiniciar_tmr0
-    btfsc cont_1s,0
-    goto $-3
-
-    incf PORTA
+    config_ioc:
+    banksel TRISA
+    bsf IOCB,0
+    bsf IOCB,1
+    banksel PORTA
+    movf PORTB,W
+    bcf ((INTCON) and 07Fh), 0
 
     return
-    contador_display:
-    btfsc PORTB,0
-    call inc_porta
-    btfsc PORTB,1
-    call dec_porta
+
+    config_int_enable:
+    bsf ((INTCON) and 07Fh), 7
+    bsf ((INTCON) and 07Fh), 5
+    bcf ((INTCON) and 07Fh), 2
+    bsf ((INTCON) and 07Fh), 3
+    bcf ((INTCON) and 07Fh), 0
     return
     config_tmr0:
     banksel TRISA
@@ -2585,12 +2616,7 @@ ENDM
     bcf ((OPTION_REG) and 07Fh), 1
     bsf ((OPTION_REG) and 07Fh), 0
     banksel PORTA
-    call reiniciar_tmr0
-    return
-    reiniciar_tmr0:
-    movlw 12
-    movwf TMR0
-    bcf ((INTCON) and 07Fh), 2
+    restart_tmr0
     return
     config_io:
      bsf STATUS,5 ;Banco 11
@@ -2606,15 +2632,19 @@ ENDM
     ;Establecemos con entradas los pines del puerto B
     bsf TRISB,0
     bsf TRISB,1
+    bcf OPTION_REG,7
+    bsf WPUB, 0
+    bsf WPUB,1
+
     ;Establecemos los pines del puerto C como salidas
     bcf TRISC,0
     bcf TRISC,1
     bcf TRISC,2
     bcf TRISC,3
     ;Establecemos los pines del puerto E como salida
-    bcf TRISE,0
+    ;bcf TRISE,0
     ;Establecemos los pines del puerto D como salidas
-    clrf TRISD
+    ;clrf TRISD
    ;Limpiamos los pines al iniciar el programa
     bcf STATUS,5
     bcf STATUS,6
@@ -2630,31 +2660,7 @@ ENDM
     bsf ((OSCCON) and 07Fh), 4
     bsf ((OSCCON) and 07Fh), 0
     return
-    inc_porta:
-    call delay_small
-    btfsc PORTB, 0
-    goto $-1
-    incf PORTC
-    return
-    dec_porta:
-     call delay_small
-      btfsc PORTB, 1
-    goto $-1
-    decf PORTC
-    return
- delay_big:
-    movlw 200
-    movwf cont_big
-    call delay_small
-    decfsz cont_big,1
-    goto $-2
-    return
 
-    delay_small:
-    movlw 165
-    movwf cont_small
-    decfsz cont_small,1
-    goto $-1
-    return
+
 
     END
