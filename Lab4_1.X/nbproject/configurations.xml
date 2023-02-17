@@ -13,6 +13,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Lab4.s</itemPath>
+      <itemPath>Postlab_4.s</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -63,6 +64,8 @@
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
+      <item path="Lab4.s" ex="true" overriding="false">
+      </item>
       <pic-as-assembler>
         <property key="fmax-errors" value="20"/>
         <property key="list-custom-assembler-options" value=""/>

@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=Lab4.s
+SOURCEFILES_QUOTED_IF_SPACED=Postlab_4.s
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Lab4.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/Lab4.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Postlab_4.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/Postlab_4.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/Lab4.o
+OBJECTFILES=${OBJECTDIR}/Postlab_4.o
 
 # Source Files
-SOURCEFILES=Lab4.s
+SOURCEFILES=Postlab_4.s
 
 
 
@@ -89,22 +89,22 @@ FINAL_IMAGE_NAME_MINUS_EXTENSION=${DISTDIR}/Lab4_1.X.${IMAGE_TYPE}
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: pic-as-assembler
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/Lab4.o: Lab4.s  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/Postlab_4.o: Postlab_4.s  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Lab4.o 
+	@${RM} ${OBJECTDIR}/Postlab_4.o 
 	${MP_AS} -mcpu=PIC16F887 -c \
-	-o ${OBJECTDIR}/Lab4.o \
-	Lab4.s \
-	 -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
+	-o ${OBJECTDIR}/Postlab_4.o \
+	Postlab_4.s \
+	 -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
 	
 else
-${OBJECTDIR}/Lab4.o: Lab4.s  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/Postlab_4.o: Postlab_4.s  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Lab4.o 
+	@${RM} ${OBJECTDIR}/Postlab_4.o 
 	${MP_AS} -mcpu=PIC16F887 -c \
-	-o ${OBJECTDIR}/Lab4.o \
-	Lab4.s \
-	  -mdfp="${DFP_DIR}/xc8"  -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
+	-o ${OBJECTDIR}/Postlab_4.o \
+	Postlab_4.s \
+	  -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
 	
 endif
 
@@ -115,13 +115,13 @@ ${DISTDIR}/Lab4_1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Ma
 	@${MKDIR} ${DISTDIR} 
 	${MP_LD} -mcpu=PIC16F887 ${OBJECTFILES_QUOTED_IF_SPACED} \
 	-o ${DISTDIR}/Lab4_1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} \
-	 -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -mcallgraph=std -Wl,-Map=${FINAL_IMAGE_NAME_MINUS_EXTENSION}.map -mno-download-hex
+	 -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -mcallgraph=std -Wl,-Map=${FINAL_IMAGE_NAME_MINUS_EXTENSION}.map -mno-download-hex
 else
 ${DISTDIR}/Lab4_1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} ${DISTDIR} 
 	${MP_LD} -mcpu=PIC16F887 ${OBJECTFILES_QUOTED_IF_SPACED} \
 	-o ${DISTDIR}/Lab4_1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} \
-	  -mdfp="${DFP_DIR}/xc8"  -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -mcallgraph=std -Wl,-Map=${FINAL_IMAGE_NAME_MINUS_EXTENSION}.map -mno-download-hex
+	  -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -mcallgraph=std -Wl,-Map=${FINAL_IMAGE_NAME_MINUS_EXTENSION}.map -mno-download-hex
 endif
 
 

@@ -6,7 +6,7 @@ Linker command line:
   --edf=C:\Program Files\Microchip\xc8\v2.40\pic\dat\20220703182018_en.msgs \
   -cs -h+dist/default/production\Lab4_1.X.production.sym \
   --cmf=dist/default/production\Lab4_1.X.production.cmf -z -Q16F887 \
-  -oC:\Users\diego\AppData\Local\Temp\xcAsm5c.4 --fixupoverflow=error \
+  -oC:\Users\User\AppData\Local\Temp\xcAsfa4.4 --fixupoverflow=error \
   -ver=XC8 PIC(R) Assembler --fixupoverflow=lstwarn \
   -Mdist/default/production/Lab4_1.X.production.map -E1 --acfsm=1493 \
   -ACODE=00h-07FFhx4 -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 \
@@ -17,7 +17,7 @@ Linker command line:
   -ASFR1=080h-09Fh -ASFR2=0100h-010Fh -ASFR3=0180h-018Fh \
   -ACONFIG=02007h-02008h -DCONFIG=2 -AIDLOC=02000h-02003h -DIDLOC=2 \
   -AEEDATA=00h-0FFh/02100h -DEEDATA=2 -DCODE=2 -DSTRCODE=2 -DSTRING=2 \
-  -DCONST=2 -DENTRY=2 build/default/production/Lab4.o 
+  -DCONST=2 -DENTRY=2 build/default/production/Postlab_4.o 
 
 Object code version is 3.11
 
@@ -26,16 +26,18 @@ Machine type is 16F887
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-build/default/production/Lab4.o
+build/default/production/Postlab_4.o
                 config                             2007     2007        2        0       4
-                resVect                               0        0       25        0       0
+                intVect                               0        0       2E        0       0
+                resVect                               0        0        3        0       0
                 code                                  0        0      15B        0       0
-                udata_bank0                          20       20        3       20       1
+                udata_bank0                          20       20        8       20       1
                 udata_shr                            70       70        2       70       1
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   CODE           
-                resVect                               0        0       25         0
+                intVect                               0        0       2E         0
+                resVect                               0        0        3         0
                 code                                  0        0      15B         0
 
         CLASS   STRCODE        
@@ -50,7 +52,7 @@ TOTAL           Name                               Link     Load   Length     Sp
                 udata_shr                            70       70        2         1
 
         CLASS   BANK0          
-                udata_bank0                          20       20        3         1
+                udata_bank0                          20       20        8         1
 
         CLASS   BANK1          
 
@@ -81,14 +83,14 @@ TOTAL           Name                               Link     Load   Length     Sp
 
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
 
-                udata_bank0                    000020  000003  000023        20       1  BANK0       1
+                udata_bank0                    000020  000008  000028        20       1  BANK0       1
                 udata_shr                      000070  000002  000072        70       1  COMMON      1
 
 
 UNUSED ADDRESS RANGES
 
         Name                Unused          Largest block    Delta
-        BANK0            0023-006F             4D           1
+        BANK0            0028-006F             48           1
         BANK1            00A0-00EF             50           1
         BANK2            0110-016F             60           1
         BANK3            0190-01EF             60           1
@@ -98,7 +100,7 @@ UNUSED ADDRESS RANGES
         EEDATA           2100-21FF            100           2
         ENTRY            015B-1FFF            100           2
         IDLOC            2000-2003              4           2
-        RAM              0023-006F             4D           1
+        RAM              0028-006F             48           1
                          00A0-00EF             50
                          0110-016F             60
                          0190-01EF             60
@@ -109,14 +111,15 @@ UNUSED ADDRESS RANGES
 
 __Hcode        code        0000  __Hconfig      config      2009
 __Hdata        data        0000  __Hedata       edata       0000
-__HresVect     resVect     0000  __Hspace_0     (abs)       015B
-__Hspace_1     (abs)       0072  __Hspace_3     (abs)       0000
-__Hspace_4     (abs)       4010  __Hudata       udata       0000
-__Hudata_bank0 udata_bank0 0000  __Hudata_bank1 udata_bank1 0000
-__Hudata_bank2 udata_bank2 0000  __Hudata_bank3 udata_bank3 0000
-__Hudata_shr   udata_shr   0000  __Lcode        code        0000
-__Lconfig      config      0000  __Ldata        data        0000
-__Ledata       edata       0000  __LresVect     resVect     0000
+__HintVect     intVect     0000  __HresVect     resVect     0000
+__Hspace_0     (abs)       015B  __Hspace_1     (abs)       0072
+__Hspace_3     (abs)       0000  __Hspace_4     (abs)       4010
+__Hudata       udata       0000  __Hudata_bank0 udata_bank0 0000
+__Hudata_bank1 udata_bank1 0000  __Hudata_bank2 udata_bank2 0000
+__Hudata_bank3 udata_bank3 0000  __Hudata_shr   udata_shr   0000
+__Lcode        code        0000  __Lconfig      config      0000
+__Ldata        data        0000  __Ledata       edata       0000
+__LintVect     intVect     0000  __LresVect     resVect     0000
 __Lspace_0     (abs)       0000  __Lspace_1     (abs)       0000
 __Lspace_3     (abs)       0000  __Lspace_4     (abs)       0000
 __Ludata       udata       0000  __Ludata_bank0 udata_bank0 0000
