@@ -32,9 +32,24 @@
 #include "USARTmodl.h"
 #define _XTAL_FREQ 8000000
 #include <string.h>
+char valpot;
 
 /********************** end UART functions **************************/
-
+void __interrupt() isr (void)
+{
+    if(PIR1bits.ADIF){
+        //Interrupción
+         if (ADCON0bits.CHS ==0)
+          valpot = ADRESH;
+         PIR1bits.ADIF =0;
+        
+     
+        
+    }
+    
+}
+void setup(void);
+void preguntas (void);
 
  char uart_read(){
  if(PIR1bits.RCIF== 0){
@@ -51,13 +66,14 @@
 // main function
 void main(void)
 {
+    setup();
   OSCCON = 0x70;    // set internal oscillator to 8MHz
  
   UART_Init(9600);  // initialize UART module with 9600 baud
  
   __delay_ms(2000);  // wait 2 seconds
  
-  UART_Print("Hello world!\r\n");  // UART print
+  UART_Print("1.Leer potenciometro\r\n");  // UART print
  
   __delay_ms(1000);  // wait 1 second
  
@@ -66,14 +82,47 @@ void main(void)
   __delay_ms(1000);  // wait 1 second
  
   UART_Print("\r\n");  // start new line
- 
+ ADCON0bits.GO =1;
+ char text[9];
   while(1)
   {
+       if (ADCON0bits.GO ==0)
+     ADCON0bits.GO =1;
       //Recibir datos del terminal
-      char datos = uart_read();
-      if (datos == '1'){
-          UART_Print("Hola\r\n");
-          RCSTAbits.CREN =0;
+     /*  char datos = uart_read();
+      if (datos == '5'){
+          UART_Print("Numero 5\r\n");
+          RCREG =0;
+          TRISDbits.TRISD0 =1;
+          TRISDbits.TRISD1 =0;
+          TRISDbits.TRISD2 =1;
+          TRISDbits.TRISD3 =0;
+      }
+      * */
+      //Probando usando un break
+      switch (uart_read()){
+          case '1': 
+             
+               valpot = ADRESH;
+               UART_Print ("\r\n");
+            sprintf(text, "%03u\r\n", valpot);
+            UART_Print(text);
+   
+  
+              preguntas();
+             RCREG ='0';
+             
+             break;
+           case '2': 
+               __delay_us(9200000);
+               UART_Print ("\r\n");
+               UART_Print(uart_read());
+               UART_Print ("\r\n");
+               preguntas();
+               RCREG ='0';
+               
+               break;
+          
       }
       //Enviar datos al terminal
     if ( UART_Data_Ready() )  // if a character available
@@ -84,4 +133,32 @@ void main(void)
  
   }
  
+}
+void setup(void){
+    ANSEL = 0b00000011;
+    ANSELH = 0;
+    
+    TRISA = 0xFF;
+    
+ 
+    // Configuración del ADC
+    ADCON1bits.ADFM = 0; //Justificado a la izquierda
+    ADCON1bits.VCFG0 = 0;
+    ADCON1bits.VCFG1 = 0;
+    
+    ADCON0bits.ADCS = 0b01; //FOSC/32
+    ADCON0bits.CHS = 0;
+    ADCON0bits.ADON= 1;
+    __delay_us(50);
+              //Configuración de las interrupciones
+    PIR1bits.ADIF = 0;
+    PIE1bits.ADIE = 1;
+    INTCONbits.PEIE = 1;
+    INTCONbits.GIE = 1;
+    
+}
+void preguntas(void)
+{
+    UART_Print ("1.Leer potenciometro\r\n");
+    UART_Print (message);
 }
