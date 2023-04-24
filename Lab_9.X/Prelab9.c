@@ -40,11 +40,39 @@
 /*
  *Variables
  */
-
+unsigned int valadr,valpot;
 /*
  * Prototipos de funciones
  */
+unsigned char readEEPROM(unsigned char  address)
+{
+   
+  EEADR = address; //Address to be read
+  EECON1bits.EEPGD = 0;//Selecting EEPROM Data Memory
+  EECON1bits.RD = 1; //Initialise read cycle
+  return EEDATA; //Returning data
+}
 
+void writeEEPROM(unsigned char  address, unsigned char  dataEE)
+{ 
+  unsigned char INTCON_SAVE;//To save INTCON register value
+  EEADR = address; //Address to write
+  EEDATA = dataEE; //Data to write
+  EECON1bits.EEPGD = 0; //Selecting EEPROM Data Memory
+  EECON1bits.WREN = 1; //Enable writing of EEPROM
+  INTCON_SAVE=INTCON;//Backup INCON interupt register
+  INTCON=0; //Diables the interrupt
+  EECON2=0x55; //Required sequence for write to internal EEPROM
+  EECON2=0xAA; //Required sequence for write to internal EEPROM
+  EECON1bits.WR = 1; //Initialise write cycle
+  INTCON = INTCON_SAVE;//Enables Interrupt
+  EECON1bits.WREN = 0; //To disable write
+  while(PIR2bits.EEIF == 0)//Checking for complition of write operation
+  {
+    NOP(); //do nothing
+  }
+  PIR2bits.EEIF = 0; //Clearing EEIF bit
+}
 
 
 void setup(void);
@@ -61,8 +89,10 @@ void __interrupt() isr (void)
         
       
         }
-        else if (ADCON0bits.CHS ==0)
+        else if (ADCON0bits.CHS ==0){
             PORTC = ADRESH;
+            valpot = ADRESH;
+        }
          PIR1bits.ADIF =0;
         
      
@@ -72,20 +102,25 @@ void __interrupt() isr (void)
     if (INTCONbits.RBIF ){
        
         //INTCONbits.RBIF = 0;
+        /*
         if (!PORTBbits.RB0){
             while (!RB0);
             SLEEP();
         }
+         **/
         if (!PORTBbits.RB1){
-            while (!RB1){
-             INTCONbits.RBIF = 0;
-             PORTD --;
-                         }
+            while (!RB1);
+                PORTE ++;   
+        
+            
+                         
         }
     if (!PORTBbits.RB2){
-            while (!RB1){
-                EEPROM_Write();
-            
+            while (!RB2){
+                //valadr = 10;
+                writeEEPROM(valadr, valpot);
+                PORTD = readEEPROM(valadr);
+                
                          }
         }
     
@@ -112,18 +147,18 @@ void main (void)
             
             ADCON0bits.GO =1;
         }
-        /*
+        
         if (!PORTBbits.RB0){
             while (!RB0);
-            PORTD ++;
+            SLEEP();
         }
+        /*
     if (!PORTBbits.RB1){
             while (!RB1);
             PORTD --;
         }
     */
-        
-        
+     
         
     }
     
@@ -136,15 +171,16 @@ void setup(void){
     ANSELH = 0;
     
     TRISC = 0;
-    TRISB = 0b1111;
+    TRISB = 0b11111111;
     TRISD = 0;
+    TRISE = 0;
     OPTION_REGbits.nRBPU =  0;
-    WPUB = 0b0111;
-    IOCB = 0b1111;
+    WPUB = 0b1111;
+   
     PORTB = 0;
     PORTC = 0;
     PORTD = 0;
-    
+    PORTE = 0;
    
     // Configuración del oscilador
     OSCCONbits.IRCF =   0b0111; //8MHz
@@ -178,32 +214,4 @@ void setup(void){
     INTCONbits.PEIE = 1;
     INTCONbits.GIE = 1;
     
-}
-unsigned char readEEPROM(unsigned char  address)
-{
-  EEADR = address; //Address to be read
-  EECON1bits.EEPGD = 0;//Selecting EEPROM Data Memory
-  EECON1bits.RD = 1; //Initialise read cycle
-  return EEDATA; //Returning data
-}
-
-void writeEEPROM(unsigned char  address, unsigned char  dataEE)
-{ 
-  unsigned char INTCON_SAVE;//To save INTCON register value
-  EEADR = address; //Address to write
-  EEDATA = dataEE; //Data to write
-  EECON1bits.EEPGD = 0; //Selecting EEPROM Data Memory
-  EECON1bits.WREN = 1; //Enable writing of EEPROM
-  INTCON_SAVE=INTCON;//Backup INCON interupt register
-  INTCON=0; //Diables the interrupt
-  EECON2=0x55; //Required sequence for write to internal EEPROM
-  EECON2=0xAA; //Required sequence for write to internal EEPROM
-  EECON1bits.WR = 1; //Initialise write cycle
-  INTCON = INTCON_SAVE;//Enables Interrupt
-  EECON1bits.WREN = 0; //To disable write
-  while(PIR2bits.EEIF == 0)//Checking for complition of write operation
-  {
-    NOP(); //do nothing
-  }
-  PIR2bits.EEIF = 0; //Clearing EEIF bit
 }
