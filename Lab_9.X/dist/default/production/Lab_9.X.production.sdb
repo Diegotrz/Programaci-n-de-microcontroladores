@@ -11,17 +11,17 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"47 C:\Users\diego\OneDrive\Imágenes\micros2.0\Programaci-n-de-microcontroladores\Lab_9.X\Prelab9.c
+"47 C:\Users\Diego\Pictures\Programaci-n-de-microcontroladores\Lab_9.X\Prelab9.c
 [v _readEEPROM readEEPROM `(uc  1 e 1 0 ]
 "56
 [v _writeEEPROM writeEEPROM `(v  1 e 1 0 ]
 "83
 [v _isr isr `II(v  1 e 1 0 ]
-"133
+"132
 [v _main main `(v  1 e 1 0 ]
-"169
+"171
 [v _setup setup `(v  1 e 1 0 ]
-"229 C:/Program Files/Microchip/MPLABX/v6.05/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\pic\include\proc\pic16f887.h
+"229 D:/Mpxlab/packs/Microchip/PIC16Fxxx_DFP/1.3.42/xc8\pic\include\proc\pic16f887.h
 [v _PORTB PORTB `VEuc  1 e 1 @6 ]
 [s S167 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
@@ -83,12 +83,12 @@
 "611
 [u S56 . 1 `S47 1 . 1 0 ]
 [v _PIR2bits PIR2bits `VES56  1 e 1 @13 ]
-[s S278 . 1 `uc 1 T2CKPS 1 0 :2:0 
+[s S279 . 1 `uc 1 T2CKPS 1 0 :2:0 
 `uc 1 TMR2ON 1 0 :1:2 
 `uc 1 TOUTPS 1 0 :4:3 
 ]
 "794
-[s S282 . 1 `uc 1 T2CKPS0 1 0 :1:0 
+[s S283 . 1 `uc 1 T2CKPS0 1 0 :1:0 
 `uc 1 T2CKPS1 1 0 :1:1 
 `uc 1 . 1 0 :1:2 
 `uc 1 TOUTPS0 1 0 :1:3 
@@ -96,8 +96,8 @@
 `uc 1 TOUTPS2 1 0 :1:5 
 `uc 1 TOUTPS3 1 0 :1:6 
 ]
-[u S290 . 1 `S278 1 . 1 0 `S282 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES290  1 e 1 @18 ]
+[u S291 . 1 `S279 1 . 1 0 `S283 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES291  1 e 1 @18 ]
 "1239
 [v _ADRESH ADRESH `VEuc  1 e 1 @30 ]
 [s S87 . 1 `uc 1 ADON 1 0 :1:0 
@@ -123,7 +123,7 @@
 ]
 [u S107 . 1 `S87 1 . 1 0 `S92 1 . 1 0 `S101 1 . 1 0 `S104 1 . 1 0 ]
 [v _ADCON0bits ADCON0bits `VES107  1 e 1 @31 ]
-[s S209 . 1 `uc 1 PS 1 0 :3:0 
+[s S208 . 1 `uc 1 PS 1 0 :3:0 
 `uc 1 PSA 1 0 :1:3 
 `uc 1 T0SE 1 0 :1:4 
 `uc 1 T0CS 1 0 :1:5 
@@ -131,12 +131,12 @@
 `uc 1 nRBPU 1 0 :1:7 
 ]
 "1367
-[s S216 . 1 `uc 1 PS0 1 0 :1:0 
+[s S215 . 1 `uc 1 PS0 1 0 :1:0 
 `uc 1 PS1 1 0 :1:1 
 `uc 1 PS2 1 0 :1:2 
 ]
-[u S220 . 1 `S209 1 . 1 0 `S216 1 . 1 0 ]
-[v _OPTION_REGbits OPTION_REGbits `VES220  1 e 1 @129 ]
+[u S219 . 1 `S208 1 . 1 0 `S215 1 . 1 0 ]
+[v _OPTION_REGbits OPTION_REGbits `VES219  1 e 1 @129 ]
 "1479
 [v _TRISB TRISB `VEuc  1 e 1 @134 ]
 "1541
@@ -145,7 +145,7 @@
 [v _TRISD TRISD `VEuc  1 e 1 @136 ]
 "1665
 [v _TRISE TRISE `VEuc  1 e 1 @137 ]
-[s S306 . 1 `uc 1 TMR1IE 1 0 :1:0 
+[s S307 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
 `uc 1 SSPIE 1 0 :1:3 
@@ -154,33 +154,35 @@
 `uc 1 ADIE 1 0 :1:6 
 ]
 "1719
-[u S314 . 1 `S306 1 . 1 0 ]
-[v _PIE1bits PIE1bits `VES314  1 e 1 @140 ]
-[s S237 . 1 `uc 1 SCS 1 0 :1:0 
+[u S315 . 1 `S307 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES315  1 e 1 @140 ]
+[s S238 . 1 `uc 1 SCS 1 0 :1:0 
 `uc 1 LTS 1 0 :1:1 
 `uc 1 HTS 1 0 :1:2 
 `uc 1 OSTS 1 0 :1:3 
 `uc 1 IRCF 1 0 :3:4 
 ]
 "1883
-[s S243 . 1 `uc 1 . 1 0 :4:0 
+[s S244 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 IRCF0 1 0 :1:4 
 `uc 1 IRCF1 1 0 :1:5 
 `uc 1 IRCF2 1 0 :1:6 
 ]
-[u S248 . 1 `S237 1 . 1 0 `S243 1 . 1 0 ]
-[v _OSCCONbits OSCCONbits `VES248  1 e 1 @143 ]
+[u S249 . 1 `S238 1 . 1 0 `S244 1 . 1 0 ]
+[v _OSCCONbits OSCCONbits `VES249  1 e 1 @143 ]
 "2347
 [v _WPUB WPUB `VEuc  1 e 1 @149 ]
-[s S263 . 1 `uc 1 . 1 0 :4:0 
+"2417
+[v _IOCB IOCB `VEuc  1 e 1 @150 ]
+[s S264 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 VCFG0 1 0 :1:4 
 `uc 1 VCFG1 1 0 :1:5 
 `uc 1 . 1 0 :1:6 
 `uc 1 ADFM 1 0 :1:7 
 ]
 "2992
-[u S269 . 1 `S263 1 . 1 0 ]
-[v _ADCON1bits ADCON1bits `VES269  1 e 1 @159 ]
+[u S270 . 1 `S264 1 . 1 0 ]
+[v _ADCON1bits ADCON1bits `VES270  1 e 1 @159 ]
 "3246
 [v _EEDATA EEDATA `VEuc  1 e 1 @268 ]
 "3258
@@ -207,23 +209,23 @@
 [v _RB1 RB1 `VEb  1 e 0 @49 ]
 "4114
 [v _RB2 RB2 `VEb  1 e 0 @50 ]
-"43 C:\Users\diego\OneDrive\Imágenes\micros2.0\Programaci-n-de-microcontroladores\Lab_9.X\Prelab9.c
+"43 C:\Users\Diego\Pictures\Programaci-n-de-microcontroladores\Lab_9.X\Prelab9.c
 [v _valadr valadr `ui  1 e 2 0 ]
 [v _valpot valpot `ui  1 e 2 0 ]
-"133
+"132
 [v _main main `(v  1 e 1 0 ]
 {
-"165
+"167
 } 0
-"169
+"171
 [v _setup setup `(v  1 e 1 0 ]
 {
-"217
+"219
 } 0
 "83
 [v _isr isr `II(v  1 e 1 0 ]
 {
-"129
+"128
 } 0
 "56
 [v _writeEEPROM writeEEPROM `(v  1 e 1 0 ]

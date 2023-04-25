@@ -108,10 +108,9 @@ void __interrupt() isr (void)
             SLEEP();
         }
          **/
-        if (!PORTBbits.RB1){
-            while (!RB1);
-                PORTE ++;   
-        
+        if (PORTBbits.RB1 == 0 || INTCONbits.RBIF == 0){
+            while (!RB1);   
+                INTCONbits.RBIF = 0;    
             
                          
         }
@@ -120,7 +119,7 @@ void __interrupt() isr (void)
                 //valadr = 10;
                 writeEEPROM(valadr, valpot);
                 PORTD = readEEPROM(valadr);
-                
+               
                          }
         }
     
@@ -149,8 +148,11 @@ void main (void)
         }
         
         if (!PORTBbits.RB0){
-            while (!RB0);
+            while (!RB0){
+            
             SLEEP();
+            INTCONbits.RBIF = 0;
+            }
         }
         /*
     if (!PORTBbits.RB1){
@@ -158,7 +160,7 @@ void main (void)
             PORTD --;
         }
     */
-     
+    
         
     }
     
@@ -176,7 +178,7 @@ void setup(void){
     TRISE = 0;
     OPTION_REGbits.nRBPU =  0;
     WPUB = 0b1111;
-   
+   IOCB= 0b01111111;
     PORTB = 0;
     PORTC = 0;
     PORTD = 0;
